@@ -1,7 +1,6 @@
 package lib;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -47,29 +46,30 @@ public class Employee {
 		childIdNumbers = new LinkedList<String>();
 	}
 	
-	/**
-	 * Fungsi untuk menentukan gaji bulanan pegawai berdasarkan grade kepegawaiannya (grade 1: 3.000.000 per bulan, grade 2: 5.000.000 per bulan, grade 3: 7.000.000 per bulan)
-	 * Jika pegawai adalah warga negara asing gaji bulanan diperbesar sebanyak 50%
-	 */
-	
-	public void setMonthlySalary(int grade) {	
-		if (grade == 1) {
-			monthlySalary = 3000000;
-			if (isForeigner) {
-				monthlySalary = (int) (3000000 * 1.5);
-			}
-		}else if (grade == 2) {
-			monthlySalary = 5000000;
-			if (isForeigner) {
-				monthlySalary = (int) (3000000 * 1.5);
-			}
-		}else if (grade == 3) {
-			monthlySalary = 7000000;
-			if (isForeigner) {
-				monthlySalary = (int) (3000000 * 1.5);
-			}
-		}
-	}
+	// Metode setMonthlySalary direfactor untuk mengurangi kompleksitas
+    public void setMonthlySalary(int grade) {
+        monthlySalary = calculateMonthlySalary(grade);
+    }
+
+	// Metode untuk menghitung gaji bulanan berdasarkan grade dan status kebangsaan
+    private int calculateMonthlySalary(int grade) {
+        int baseSalary = 0;
+        switch (grade) {
+            case 1:
+                baseSalary = 3000000;
+                break;
+            case 2:
+                baseSalary = 5000000;
+                break;
+            case 3:
+                baseSalary = 7000000;
+                break;
+        }
+        if (isForeigner) {
+            baseSalary *= 1.5;
+        }
+        return baseSalary;
+    }
 	
 	public void setAnnualDeductible(int deductible) {	
 		this.annualDeductible = deductible;
