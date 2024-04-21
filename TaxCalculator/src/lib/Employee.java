@@ -63,6 +63,11 @@ public class Employee {
     public int getAnnualIncomeTax() {
         LocalDate date = LocalDate.now();
         int monthWorkingInYear = date.getYear() == yearJoined ? date.getMonthValue() - monthJoined : 12;
-        return TaxFunction.calculateTax(monthlySalary, otherMonthlyIncome, monthWorkingInYear, annualDeductible, spouseIdNumber.equals(""), childIdNumbers.size());
+
+        // Membuat objek TaxInfo dengan nilai-nilai yang diperlukan
+        TaxFunction.TaxInfo taxInfo = new TaxFunction.TaxInfo(monthlySalary, otherMonthlyIncome, monthWorkingInYear, annualDeductible, spouseIdNumber.equals(""), childIdNumbers.size());
+
+        // Memanggil calculateTax dengan objek TaxInfo sebagai argumen
+        return TaxFunction.calculateTax(taxInfo);
     }
 }
